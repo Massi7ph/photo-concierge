@@ -13,7 +13,7 @@
         header h1 { font-weight: 300; letter-spacing: 3px; text-transform: uppercase; font-size: 1.3rem; margin: 0; }
         .card { background: var(--white); padding: 25px; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
         .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center; margin-bottom: 15px; }
-        .tip-box { background: #fafafa; padding: 15px; border-left: 3px solid var(--gold); font-size: 0.9rem; margin-bottom: 15px; }
+        .tip-box { background: #fafafa; padding: 15px; border-left: 4px solid var(--gold); font-size: 0.95rem; margin-bottom: 15px; line-height: 1.5; }
         .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .gallery img { width: 100%; height: 100px; object-fit: cover; border-radius: 2px; }
         input, .btn { width: 100%; padding: 15px; margin: 8px 0; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
@@ -27,58 +27,57 @@
 <div class="container">
     <header>
         <h1>Massimiliano Cossu</h1>
-        <div style="color: var(--gold); font-size: 0.7rem; font-weight: bold; letter-spacing: 2px;">IMPERIA PHOTO CONCIERGE</div>
+        <div style="color: var(--gold); font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; margin-top:5px;">IMPERIA PHOTO CONCIERGE</div>
     </header>
 
     <div class="card">
         <div class="weather-grid">
-            <div><small style="color:#888">METEO IMPERIA</small><br><strong id="temp">--</strong></div>
-            <div><small style="color:#888">GOLDEN HOUR</small><br><strong id="sun" style="color:var(--gold)">--</strong></div>
+            <div><small style="color:#888">CITTA'</small><br><strong id="loc-name">Imperia</strong></div>
+            <div><small style="color:#888">METEO</small><br><strong id="temp">--°C</strong></div>
         </div>
-        <div class="tip-box" id="style-tip">Caricamento consigli...</div>
+        <div class="tip-box" id="style-tip">Stiamo preparando i consigli per la tua sessione a Imperia...</div>
         <div class="gallery" id="gallery"></div>
     </div>
 
     <div class="card">
         <h3 style="font-weight: 300; text-align: center; margin-top: 0;">Richiedi Sessione</h3>
         <form id="bookingForm">
-            <input type="text" id="from_name" placeholder="Nome Ospite" required>
+            <input type="text" id="from_name" placeholder="Tuo Nome" required>
             <input type="text" id="room_number" placeholder="Numero Camera" required>
             <input type="time" id="requested_time" required>
-            <button type="submit" class="btn" id="submitBtn">Invia al Fotografo</button>
+            <button type="submit" class="btn" id="submitBtn">Invia Richiesta</button>
         </form>
     </div>
 </div>
 
 <script>
-    const API_KEY_METEO = "f1cdab2eef339087f342360bdd4958cf";
-    const CITY = "Imperia"; 
-    const EMAILJS_PUBLIC_KEY = "Jlm5ZEzPEoWKBx3ki";
-    const EMAILJS_SERVICE_ID = "default_service"; 
-    const EMAILJS_TEMPLATE_ID = "template_ua1pm9l";
+    // Configurazione
+    const API_KEY = "f1cdab2eef339087f342360bdd4958cf";
+    const CITY = "Imperia";
+    
+    emailjs.init("Jlm5ZEzPEoWKBx3ki");
 
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-
-    async function init() {
+    async function startApp() {
+        const tip = document.getElementById('style-tip');
+        const gallery = document.getElementById('gallery');
+        
         try {
-            const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY_METEO}&units=metric&lang=it`);
+            const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric&lang=it`);
             const data = await res.json();
             
-            document.getElementById('temp').innerText = `${Math.round(data.main.temp)}°C`;
-            const sunset = new Date(data.sys.sunset * 1000);
-            document.getElementById('sun').innerText = `${sunset.getHours()-1}:${sunset.getMinutes()}`;
-
-            const tip = document.getElementById('style-tip');
-            const gallery = document.getElementById('gallery');
-
-            if(data.weather[0].main === "Clear" || data.weather[0].main === "Clouds") {
-                tip.innerHTML = "<strong>Location: Porto Maurizio.</strong> Abiti leggeri e toni chiari per i caruggi solari.";
+            document.getElementById('temp').innerText = Math.round(data.main.temp) + "°C";
+            
+            // Logica Consigli e Luoghi
+            if (data.weather[0].main === "Clear" || data.weather[0].main === "Clouds") {
+                tip.innerHTML = "<strong>Location Suggerita: Porto Maurizio.</strong><br>Cielo perfetto per i colori pastello dei caruggi. Consigliamo tessuti leggeri come il lino.";
                 gallery.innerHTML = '<img src="https://picsum.photos/400/600?random=1"><img src="https://picsum.photos/400/600?random=2"><img src="https://picsum.photos/400/600?random=3">';
             } else {
-                tip.innerHTML = "<strong>Location: Borgo Parrasio.</strong> Atmosfere intime. Consigliamo toni scuri o trench.";
+                tip.innerHTML = "<strong>Location Suggerita: Borgo Parrasio.</strong><br>Luce morbida e poetica tra le mura antiche. Consigliamo toni caldi o un trench elegante.";
                 gallery.innerHTML = '<img src="https://picsum.photos/400/600?random=4"><img src="https://picsum.photos/400/600?random=5"><img src="https://picsum.photos/400/600?random=6">';
             }
-        } catch (e) { console.error("Errore"); }
+        } catch (e) {
+            tip.innerText = "Benvenuto a Imperia! Prenota ora la tua sessione fotografica personalizzata.";
+        }
     }
 
     document.getElementById('bookingForm').onsubmit = function(e) {
@@ -86,23 +85,18 @@
         const btn = document.getElementById('submitBtn');
         btn.innerText = "INVIO...";
         
-        const params = {
+        emailjs.send("default_service", "template_ua1pm9l", {
             from_name: document.getElementById('from_name').value,
             room_number: document.getElementById('room_number').value,
             requested_time: document.getElementById('requested_time').value
-        };
-
-        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
-            .then(() => {
-                alert("Richiesta inviata a Massimiliano!");
-                btn.innerText = "INVIA AL FOTOGRAFO";
-                e.target.reset();
-            }, (err) => {
-                alert("Errore. Riprova più tardi.");
-                btn.innerText = "INVIA AL FOTOGRAFO";
-            });
+        }).then(() => {
+            alert("Richiesta inviata! Massimiliano ti contatterà presto.");
+            btn.innerText = "INVIA RICHIESTA";
+            e.target.reset();
+        });
     };
-    init();
+
+    startApp();
 </script>
 </body>
 </html>
