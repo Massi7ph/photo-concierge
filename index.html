@@ -9,124 +9,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
     
     <style>
-        :root { --black: #000; --white: #fff; --accent: #666; --light-gray: #fafafa; }
+        :root { --black: #000; --white: #fff; --accent: #666; --light-gray: #f4f4f4; }
         body { font-family: 'Montserrat', sans-serif; background: var(--white); color: var(--black); margin: 0; text-align: center; -webkit-font-smoothing: antialiased; }
         .container { max-width: 450px; margin: 0 auto; padding: 20px 20px 40px 20px; }
         
-        /* SELETTORE LINGUA - ORA PIÙ VISIBILE */
-        .lang-switch { 
+        /* BOX LINGUE - MOLTO VISIBILE */
+        .lang-bar { 
+            background: var(--light-gray); 
+            padding: 15px; 
+            margin-bottom: 20px; 
             display: flex; 
             justify-content: center; 
-            gap: 20px; 
-            margin-bottom: 30px; 
-            padding: 10px;
-            border-bottom: 1px solid #f0f0f0;
+            gap: 30px;
+            border-radius: 8px;
         }
         .lang-btn { 
             cursor: pointer; 
-            opacity: 0.4; 
-            transition: 0.3s; 
             background: none; 
             border: none; 
             font-family: inherit; 
-            font-size: 0.8rem;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            font-size: 0.85rem; 
+            font-weight: 400; 
+            color: #888;
+            transition: 0.3s;
         }
-        .lang-btn.active { opacity: 1; font-weight: 600; border-bottom: 1px solid black; }
+        .lang-btn.active { color: var(--black); font-weight: 600; border-bottom: 2px solid var(--black); }
 
-        /* LOGO & BRANDING */
-        .logo-container img { width: 130px; height: auto; margin-bottom: 5px; }
-        .brand-name { font-weight: 400; letter-spacing: 5px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 30px; }
+        /* LOGO AREA */
+        .logo-container { margin-bottom: 10px; }
+        .logo-container img { width: 150px; height: auto; display: block; margin: 0 auto; }
+        .brand-name { font-weight: 400; letter-spacing: 5px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 30px; }
 
         /* AI STATUS & WEATHER */
         .ai-status { font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 8px; }
         .dot { width: 6px; height: 6px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 5px #00ff00; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-        .weather-card { border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; padding: 25px 0; margin-bottom: 30px; }
+        .weather-card { border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 20px 0; margin-bottom: 30px; }
         .city { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: #999; margin-bottom: 5px; display: block; }
         .temp { font-size: 2.5rem; font-weight: 200; }
 
         /* MOOD SELECTOR */
         .mood-container { margin-bottom: 30px; text-align: left; }
-        .ai-label { font-weight: 600; font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 15px; }
-        .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .mood-btn { background: white; border: 1px solid #eee; padding: 12px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; font-family: inherit; }
+        .ai-label { font-weight: 600; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .mood-btn { background: white; border: 1px solid #ddd; padding: 15px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; font-family: inherit; }
         .mood-active { background: var(--black) !important; color: var(--white) !important; border-color: var(--black) !important; }
 
         /* AI CHAT BOX */
-        .chat-box { text-align: left; font-size: 0.85rem; line-height: 1.7; font-weight: 300; padding: 20px; background: var(--light-gray); border-left: 2px solid var(--black); margin-bottom: 40px; }
-        #chat-display { height: 100px; overflow-y: auto; margin-bottom: 15px; }
-        .chat-input-wrapper { display: flex; gap: 10px; margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px; }
-        .chat-input-wrapper input { flex-grow: 1; border: none; font-size: 0.8rem; font-family: inherit; outline: none; background: transparent; }
-
-        /* FORM */
-        .form-title { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 25px; font-weight: 600; border-top: 1px solid #f0f0f0; padding-top: 30px; }
-        input[type="text"], input[type="time"] { width: 100%; padding: 15px 0; margin-bottom: 20px; border: none; border-bottom: 1px solid #eee; font-family: inherit; font-size: 0.85rem; outline: none; }
-        .btn-main { background: var(--black); color: var(--white); border: none; width: 100%; padding: 22px; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; cursor: pointer; transition: 0.4s; }
-
-        footer { margin-top: 50px; font-size: 0.5rem; letter-spacing: 2px; color: #ccc; text-transform: uppercase; }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="lang-switch">
-        <button id="btn-it" class="lang-btn active" onclick="changeLanguage('it')">🇮🇹 ITALIANO</button>
-        <button id="btn-en" class="lang-btn" onclick="changeLanguage('en')">🇬🇧 ENGLISH</button>
-    </div>
-
-    <div class="logo-container"><img src="logo.png" alt="Logo"></div>
-    <div class="brand-name">Massimiliano Cossu</div>
-
-    <div class="ai-status"><span class="dot"></span> <span id="txt-status">AI Concierge Active</span></div>
-    
-    <div class="weather-card">
-        <span class="city">Imperia, Riviera dei Fiori</span>
-        <div class="temp" id="temp">--°C</div>
-    </div>
-
-    <div class="mood-container">
-        <span class="ai-label" id="txt-mood-label">Definisci il tuo Mood</span>
-        <div class="mood-grid">
-            <button class="mood-btn" onclick="selectMood('Romantico', this)" id="m1">🌹 Romantico</button>
-            <button class="mood-btn" onclick="selectMood('Editoriale', this)" id="m2">🧥 Editoriale</button>
-            <button class="mood-btn" onclick="selectMood('Spontaneo', this)" id="m3">📸 Spontaneo</button>
-            <button class="mood-btn" onclick="selectMood('Family', this)" id="m4">👨‍👩‍👧 Family</button>
-        </div>
-    </div>
-
-    <div class="chat-box">
-        <span class="ai-label" id="txt-chat-label">Consulenza AI Live</span>
-        <div id="chat-display">...</div>
-        <div class="chat-input-wrapper">
-            <input type="text" id="user-input" placeholder="Chiedi...">
-            <button onclick="askBrain()" id="txt-ask-btn" style="background:none; border:none; cursor:pointer; font-weight:600; font-size:0.6rem; letter-spacing:1px;">INVIO</button>
-        </div>
-    </div>
-
-    <div class="form-title" id="txt-form-title">Richiedi Sessione</div>
-    <form id="bookingForm">
-        <input type="text" id="from_name" placeholder="NOME E COGNOME" required>
-        <input type="text" id="room_number" placeholder="NUMERO CAMERA" required>
-        <input type="time" id="requested_time" required>
-        <input type="hidden" id="selected_mood" value="None">
-        <button type="submit" class="btn-main" id="submitBtn">Invia Richiesta</button>
-    </form>
-
-    <footer>© 2026 Massimiliano Cossu Photography</footer>
-</div>
-
-<script>
-    const API_KEY = "f1cdab2eef339087f342360bdd4958cf";
-    let lang = 'it';
-    emailjs.init("Jlm5ZEzPEoWKBx3ki");
-
-    const content = {
-        it: {
-            status: "AI Concierge Attivo",
-            moodL: "Definisci il tuo Mood",
-            chat
+        .chat-box { text-align: left; font-size: 0.9rem; line-height: 1.7; font-weight: 300; padding: 20px; background: #fafafa; border-left: 3px solid var(--black); margin-bottom: 40px; }
+        #chat-display { min-height: 80px; margin-bottom: 15px; }
+        .chat-input-wrapper { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
