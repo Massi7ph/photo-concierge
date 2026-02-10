@@ -4,39 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Massimiliano Cossu | AI Photo Concierge</title>
+    
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --black: #000; --white: #fff; --accent: #666; }
-        body { font-family: 'Montserrat', sans-serif; background: var(--white); color: var(--black); margin: 0; text-align: center; -webkit-font-smoothing: antialiased; }
+        :root { --black: #000; --white: #fff; --accent: #666; --light-gray: #fafafa; }
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--white); 
+            color: var(--black); 
+            margin: 0; 
+            text-align: center; 
+            -webkit-font-smoothing: antialiased; 
+        }
+
         .container { max-width: 450px; margin: 0 auto; padding: 40px 20px; }
         
-        /* LOGO AREA */
-        .logo-container { margin-bottom: 10px; }
-        .logo-container img { width: 150px; height: auto; }
-        .brand-name { font-weight: 200; letter-spacing: 6px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 40px; color: var(--black); }
+        /* LOGO & BRANDING */
+        .logo-container img { width: 120px; height: auto; margin-bottom: 5px; }
+        .brand-name { font-weight: 400; letter-spacing: 5px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 40px; }
 
-        /* AI STATUS BAR */
+        /* AI STATUS & WEATHER */
         .ai-status { font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 8px; }
         .dot { width: 6px; height: 6px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 5px #00ff00; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-        /* WEATHER CARD */
-        .card { border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 30px 0; margin-bottom: 30px; }
-        .city { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; display: block; color: #999; }
-        .temp { font-size: 2.5rem; font-weight: 200; letter-spacing: -1px; }
-        
-        /* AI ADVICE BOX */
-        .ai-advice { text-align: left; font-size: 0.85rem; line-height: 1.8; font-weight: 300; padding: 25px; background: #fafafa; border-left: 2px solid var(--black); margin-bottom: 40px; }
-        .ai-label { font-weight: 600; font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 12px; color: var(--black); }
+        .weather-card { border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; padding: 25px 0; margin-bottom: 30px; }
+        .city { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: #999; margin-bottom: 5px; display: block; }
+        .temp { font-size: 2.8rem; font-weight: 200; }
 
-        /* FORM STYLING */
-        .form-title { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 25px; font-weight: 600; }
-        input { width: 100%; padding: 15px 0; margin-bottom: 25px; border: none; border-bottom: 1px solid #eee; font-family: inherit; font-size: 0.85rem; letter-spacing: 1px; outline: none; background: transparent; border-radius: 0; }
-        input:focus { border-bottom: 1px solid var(--black); }
-        .btn { background: var(--black); color: var(--white); border: none; width: 100%; padding: 22px; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; cursor: pointer; transition: 0.4s; margin-top: 10px; }
-        .btn:hover { background: #333; letter-spacing: 5px; }
-        
+        /* MOOD SELECTOR */
+        .mood-container { margin-bottom: 30px; text-align: left; }
+        .ai-label { font-weight: 600; font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .mood-btn { 
+            background: white; border: 1px solid #eee; padding: 12px; font-size: 0.65rem; 
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; font-family: inherit;
+        }
+        .mood-btn:hover { border-color: var(--black); }
+        .mood-active { background: var(--black) !important; color: var(--white) !important; border-color: var(--black) !important; }
+
+        /* AI CHAT BOX */
+        .chat-box { 
+            text-align: left; font-size: 0.85rem; line-height: 1.7; font-weight: 300; 
+            padding: 20px; background: var(--light-gray); border-left: 2px solid var(--black); margin-bottom: 40px; 
+        }
+        #chat-display { height: 100px; overflow-y: auto; margin-bottom: 15px; }
+
+        /* INTERACTIVE INPUT */
+        .chat-input-wrapper { display: flex; gap: 10px; margin-top: 10px; }
+        .chat-input-wrapper input { 
+            flex-grow: 1; border: none; border-bottom: 1px solid #ddd; 
+            font-size: 0.8rem; font-family: inherit; outline: none; padding: 5px 0;
+        }
+
+        /* FORM */
+        .form-title { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 25px; font-weight: 600; border-top: 1px solid #f0f0f0; padding-top: 30px; }
+        input[type="text"], input[type="time"] { 
+            width: 100%; padding: 15px 0; margin-bottom: 20px; border: none; 
+            border-bottom: 1px solid #eee; font-family: inherit; font-size: 0.85rem; outline: none; 
+        }
+        .btn-main { 
+            background: var(--black); color: var(--white); border: none; width: 100%; 
+            padding: 22px; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; 
+            cursor: pointer; transition: 0.4s; margin-top: 10px; 
+        }
+        .btn-main:hover { opacity: 0.8; letter-spacing: 5px; }
+
         footer { margin-top: 50px; font-size: 0.5rem; letter-spacing: 2px; color: #ccc; text-transform: uppercase; }
     </style>
 </head>
@@ -44,77 +80,112 @@
 
 <div class="container">
     <div class="logo-container">
-        <img src="logo.png" alt="Massimiliano Cossu Logo">
+        <img src="logo.png" alt="Massimiliano Cossu">
     </div>
     <div class="brand-name">Massimiliano Cossu</div>
 
     <div class="ai-status"><span class="dot"></span> AI Concierge Active</div>
-
-    <div class="card">
+    <div class="weather-card">
         <span class="city">Imperia, Riviera dei Fiori</span>
         <div class="temp" id="temp">--°C</div>
     </div>
 
-    <div class="ai-advice">
-        <span class="ai-label">Consulenza AI - Analisi Luce</span>
-        <div id="ai-output">Analisi delle condizioni atmosferiche per la tua sessione...</div>
+    <div class="mood-container">
+        <span class="ai-label">Definisci il tuo Mood</span>
+        <div class="mood-grid">
+            <button class="mood-btn" onclick="setMood('Romantico', this)">🌹 Romantico</button>
+            <button class="mood-btn" onclick="setMood('Editoriale', this)">🧥 Editoriale</button>
+            <button class="mood-btn" onclick="setMood('Spontaneo', this)">📸 Spontaneo</button>
+            <button class="mood-btn" onclick="setMood('Family', this)">👨‍👩‍👧 Family</button>
+        </div>
     </div>
 
-    <div class="form-title">Richiedi Disponibilità</div>
+    <div class="chat-box">
+        <span class="ai-label">Consulenza AI Live</span>
+        <div id="chat-display">Analisi meteo completata. Seleziona un mood o chiedimi consigli su abiti e orari...</div>
+        
+        <div class="chat-input-wrapper">
+            <input type="text" id="user-input" placeholder="Chiedi qualcosa...">
+            <button onclick="brainAI()" style="background:none; border:none; cursor:pointer; font-weight:600; font-size:0.6rem; letter-spacing:1px;">INVIO</button>
+        </div>
+    </div>
+
+    <div class="form-title">Richiedi Sessione</div>
     <form id="bookingForm">
         <input type="text" id="from_name" placeholder="NOME E COGNOME" required>
         <input type="text" id="room_number" placeholder="NUMERO CAMERA" required>
         <input type="time" id="requested_time" required>
-        <button type="submit" class="btn" id="submitBtn">Invia Richiesta</button>
+        <input type="hidden" id="selected_mood" value="Non specificato">
+        <button type="submit" class="btn-main" id="submitBtn">Invia Richiesta</button>
     </form>
 
     <footer>© 2026 Massimiliano Cossu Photography</footer>
 </div>
 
 <script>
-    // Configurazione chiavi
     const API_KEY = "f1cdab2eef339087f342360bdd4958cf";
     emailjs.init("Jlm5ZEzPEoWKBx3ki");
 
-    async function updateAI() {
+    // Inizializzazione Meteo
+    async function initWeather() {
         try {
             const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Imperia&appid=${API_KEY}&units=metric&lang=it`);
             const data = await res.json();
             document.getElementById('temp').innerText = Math.round(data.main.temp) + "°C";
-            
-            const aiOutput = document.getElementById('ai-output');
-            const condition = data.weather[0].main;
-
-            // Logica AI per consigli su Imperia
-            if (condition === "Clear") {
-                aiOutput.innerHTML = "Il sensore rileva cielo terso. La luce è ideale per contrasti decisi a <strong>Porto Maurizio</strong>. Consiglio: abiti in lino o tessuti naturali per un look editoriale e senza tempo.";
-            } else if (condition === "Clouds") {
-                aiOutput.innerHTML = "Rilevata luce diffusa e morbida. È il momento perfetto per ritratti poetici tra i vicoli del <strong>Parrasio</strong>. Consiglio: toni caldi o pastello per armonizzarsi con l'atmosfera.";
-            } else {
-                aiOutput.innerHTML = "Atmosfera cinematografica rilevata. La luce soffusa suggerisce scatti di grande carattere. Location suggerita: i <strong>portici di Oneglia</strong> per un mood sofisticato.";
-            }
-        } catch (e) { 
-            document.getElementById('ai-output').innerText = "Benvenuto. Il sistema AI è pronto per guidarti nella scelta della tua sessione fotografica a Imperia.";
-        }
+        } catch (e) { console.log("Meteo offline"); }
     }
 
+    // Gestione Mood
+    function setMood(mood, btn) {
+        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('mood-active'));
+        btn.classList.add('mood-active');
+        document.getElementById('selected_mood').value = mood;
+
+        const display = document.getElementById('chat-display');
+        const moods = {
+            'Romantico': "<strong>AI:</strong> Scelta perfetta. Per un mood Romantico consiglio il <strong>Parrasio</strong> al tramonto. Colori caldi e sguardi complici.",
+            'Editoriale': "<strong>AI:</strong> Mood sofisticato. Suggerisco i <strong>Portici di Oneglia</strong>. Outfit strutturati e pose da magazine.",
+            'Spontaneo': "<strong>AI:</strong> Cattureremo la verità. Passeggiata a <strong>Porto Maurizio</strong> tra i caruggi. Abiti comodi e sorrisi veri.",
+            'Family': "<strong>AI:</strong> Spazio alla gioia. <strong>Borgo Foce</strong> è l'ideale. Coordinati nei colori, non nello stile!"
+        };
+        display.innerHTML = moods[mood];
+    }
+
+    // Cervello AI Locale
+    function brainAI() {
+        const query = document.getElementById('user-input').value.toLowerCase();
+        const display = document.getElementById('chat-display');
+        let res = "<strong>AI:</strong> Domanda interessante. Ne parlerò con Massimiliano, ma intanto prenota pure: ti risponderà personalmente!";
+
+        if (query.includes("orari") || query.includes("quando")) res = "<strong>AI:</strong> La 'Golden Hour' (un'ora prima del tramonto) è il segreto per foto magiche a Imperia.";
+        if (query.includes("vestiti") || query.includes("abiti")) res = "<strong>AI:</strong> Consiglio lino, cotone e colori neutri. Evita loghi grandi per un look senza tempo.";
+        if (query.includes("piove") || query.includes("pioggia")) res = "<strong>AI:</strong> Se piove, Oneglia offre portici spettacolari e riparati. Oppure riprogrammiamo senza costi!";
+        if (query.includes("prezzo") || query.includes("costa")) res = "<strong>AI:</strong> Le tariffe Concierge sono riservate. Invia il form e riceverai il PDF con i pacchetti esclusivi.";
+        if (query.includes("tempi") || query.includes("consegna")) res = "<strong>AI:</strong> Anteprima entro 24 ore, galleria completa editata entro 7 giorni.";
+
+        display.innerHTML = `<div><strong>Tu:</strong> ${query}</div><div style="margin-top:10px">${res}</div>`;
+        document.getElementById('user-input').value = "";
+    }
+
+    // Invio Email
     document.getElementById('bookingForm').onsubmit = function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        btn.innerText = "ELABORAZIONE...";
+        btn.innerText = "INVIO IN CORSO...";
         
         emailjs.send("default_service", "template_ua1pm9l", {
             from_name: document.getElementById('from_name').value,
             room_number: document.getElementById('room_number').value,
-            requested_time: document.getElementById('requested_time').value
+            requested_time: document.getElementById('requested_time').value,
+            mood: document.getElementById('selected_mood').value
         }).then(() => {
-            alert("Richiesta inviata. Riceverai un riscontro a breve.");
+            alert("Richiesta ricevuta. Massimiliano ti contatterà a breve.");
             btn.innerText = "INVIA RICHIESTA";
             e.target.reset();
         });
     };
 
-    updateAI();
+    initWeather();
 </script>
 </body>
 </html>
