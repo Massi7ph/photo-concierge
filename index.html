@@ -3,23 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Massimiliano Cossu | Imperia Photo Concierge</title>
+    <title>Massimiliano Cossu | Photo Concierge</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --dark: #1a1a1a; --light: #f9f9f9; --white: #ffffff; }
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--light); margin: 0; color: var(--dark); }
-        .container { max-width: 450px; margin: 0 auto; padding: 20px; }
-        header { text-align: center; padding: 30px 0; border-bottom: 1px solid #e0e0e0; margin-bottom: 20px; }
-        header h1 { font-weight: 300; letter-spacing: 3px; text-transform: uppercase; font-size: 1.3rem; margin: 0; }
-        .card { background: var(--white); padding: 25px; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
-        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center; margin-bottom: 15px; }
-        .tip-box { background: #fafafa; padding: 15px; border-left: 4px solid var(--gold); font-size: 0.95rem; margin-bottom: 15px; line-height: 1.5; }
-        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .gallery img { width: 100%; height: 100px; object-fit: cover; border-radius: 2px; }
-        input, .btn { width: 100%; padding: 15px; margin: 8px 0; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
-        input { border: 1px solid #ddd; font-size: 16px; }
-        .btn { background: var(--dark); color: white; border: none; cursor: pointer; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
-        .btn:hover { background: var(--gold); }
+        :root { 
+            --black: #000000;
+            --white: #ffffff;
+            --gray: #f8f8f8;
+            --accent: #333333;
+        }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--white); 
+            color: var(--black); 
+            margin: 0; 
+            display: flex; 
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { 
+            width: 100%; 
+            max-width: 450px; 
+            padding: 50px 25px; 
+        }
+
+        /* LOGO STYLE */
+        header { 
+            text-align: center; 
+            margin-bottom: 60px; 
+        }
+
+        header h1 { 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 4px; 
+            font-size: 1.1rem; 
+            margin: 0; 
+            border-bottom: 2px solid var(--black);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        header p { 
+            font-size: 0.6rem; 
+            letter-spacing: 3px; 
+            text-transform: uppercase; 
+            margin-top: 10px; 
+            color: #666;
+        }
+
+        /* INFO METEO */
+        .info-bar { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 30px; 
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item small { 
+            display: block; 
+            font-size: 0.55rem; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            color: #999; 
+            margin-bottom: 5px;
+        }
+
+        .info-item span { font-size: 1rem; font-weight: 400; }
+
+        /* TIP & GALLERY */
+        .tip-text { 
+            font-size: 0.9rem; 
+            line-height: 1.7; 
+            margin-bottom: 30px; 
+            color: #444;
+            font-weight: 300;
+        }
+
+        .gallery { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            margin-bottom: 50px; 
+        }
+
+        .gallery img { 
+            width: 100%; 
+            height: 250px; 
+            object-fit: cover; 
+            transition: opacity 0.3s;
+        }
+
+        /* FORM */
+        .form-section h2 { 
+            font-size: 0.8rem; 
+            letter-spacing: 3px; 
+            text-transform: uppercase; 
+            text-align: center; 
+            margin-bottom: 30px; 
+            font-weight: 600;
+        }
+
+        input { 
+            width: 100%; 
+            padding: 15px 0; 
+            margin-bottom: 20px; 
+            border: none; 
+            border-bottom: 1px solid #e0e0e0; 
+            font-family: inherit; 
+            font-size: 0.9rem;
+            background: transparent;
+            border-radius: 0;
+        }
+
+        input:focus { outline: none; border-bottom: 1px solid var(--black); }
+
+        .btn { 
+            background: var(--black); 
+            color: var(--white); 
+            border: none; 
+            width: 100%; 
+            padding: 20px; 
+            font-family: inherit; 
+            font-size: 0.75rem; 
+            letter-spacing: 3px; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: #333; }
+
+        footer { 
+            text-align: center; 
+            font-size: 0.55rem; 
+            color: #ccc; 
+            margin-top: 60px; 
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -27,57 +154,59 @@
 <div class="container">
     <header>
         <h1>Massimiliano Cossu</h1>
-        <div style="color: var(--gold); font-size: 0.75rem; font-weight: bold; letter-spacing: 2px; margin-top:5px;">IMPERIA PHOTO CONCIERGE</div>
+        <p>Photography Concierge</p>
     </header>
 
-    <div class="card">
-        <div class="weather-grid">
-            <div><small style="color:#888">CITTA'</small><br><strong id="loc-name">Imperia</strong></div>
-            <div><small style="color:#888">METEO</small><br><strong id="temp">--°C</strong></div>
-        </div>
-        <div class="tip-box" id="style-tip">Stiamo preparando i consigli per la tua sessione a Imperia...</div>
-        <div class="gallery" id="gallery"></div>
+    <div class="info-bar">
+        <div class="info-item"><small>Location</small><span>Imperia</span></div>
+        <div class="info-item" style="text-align: right;"><small>Temperature</small><span id="temp">--°C</span></div>
     </div>
 
-    <div class="card">
-        <h3 style="font-weight: 300; text-align: center; margin-top: 0;">Richiedi Sessione</h3>
+    <div class="tip-text" id="style-tip">
+        Analisi delle condizioni di luce per la tua sessione...
+    </div>
+
+    <div class="gallery" id="gallery">
+        </div>
+
+    <div class="form-section">
+        <h2>Richiedi disponibilità</h2>
         <form id="bookingForm">
-            <input type="text" id="from_name" placeholder="Tuo Nome" required>
-            <input type="text" id="room_number" placeholder="Numero Camera" required>
+            <input type="text" id="from_name" placeholder="NOME E COGNOME" required>
+            <input type="text" id="room_number" placeholder="NUMERO CAMERA" required>
             <input type="time" id="requested_time" required>
             <button type="submit" class="btn" id="submitBtn">Invia Richiesta</button>
         </form>
     </div>
+
+    <footer>
+        © 2026 Massimiliano Cossu Photography
+    </footer>
 </div>
 
 <script>
-    // Configurazione
     const API_KEY = "f1cdab2eef339087f342360bdd4958cf";
     const CITY = "Imperia";
     
     emailjs.init("Jlm5ZEzPEoWKBx3ki");
 
-    async function startApp() {
-        const tip = document.getElementById('style-tip');
-        const gallery = document.getElementById('gallery');
-        
+    async function init() {
         try {
             const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric&lang=it`);
             const data = await res.json();
-            
             document.getElementById('temp').innerText = Math.round(data.main.temp) + "°C";
             
-            // Logica Consigli e Luoghi
+            const tip = document.getElementById('style-tip');
+            const gall = document.getElementById('gallery');
+
             if (data.weather[0].main === "Clear" || data.weather[0].main === "Clouds") {
-                tip.innerHTML = "<strong>Location Suggerita: Porto Maurizio.</strong><br>Cielo perfetto per i colori pastello dei caruggi. Consigliamo tessuti leggeri come il lino.";
-                gallery.innerHTML = '<img src="https://picsum.photos/400/600?random=1"><img src="https://picsum.photos/400/600?random=2"><img src="https://picsum.photos/400/600?random=3">';
+                tip.innerHTML = "La luce di oggi a Imperia è ideale per ritratti spontanei. Ti suggerisco i vicoli di <strong>Porto Maurizio</strong>, perfetti per catturare momenti reali in abiti leggeri.";
+                gall.innerHTML = '<img src="https://picsum.photos/600/900?random=11"><img src="https://picsum.photos/600/900?random=12">';
             } else {
-                tip.innerHTML = "<strong>Location Suggerita: Borgo Parrasio.</strong><br>Luce morbida e poetica tra le mura antiche. Consigliamo toni caldi o un trench elegante.";
-                gallery.innerHTML = '<img src="https://picsum.photos/400/600?random=4"><img src="https://picsum.photos/400/600?random=5"><img src="https://picsum.photos/400/600?random=6">';
+                tip.innerHTML = "Oggi il cielo regala una luce morbida e cinematografica. Ti suggerisco l'atmosfera del <strong>Parrasio</strong>, dove ogni angolo racconta una storia senza tempo.";
+                gall.innerHTML = '<img src="https://picsum.photos/600/900?random=13"><img src="https://picsum.photos/600/900?random=14">';
             }
-        } catch (e) {
-            tip.innerText = "Benvenuto a Imperia! Prenota ora la tua sessione fotografica personalizzata.";
-        }
+        } catch (e) { console.error("Meteo error"); }
     }
 
     document.getElementById('bookingForm').onsubmit = function(e) {
@@ -90,13 +219,13 @@
             room_number: document.getElementById('room_number').value,
             requested_time: document.getElementById('requested_time').value
         }).then(() => {
-            alert("Richiesta inviata! Massimiliano ti contatterà presto.");
+            alert("Grazie. Riceverai un riscontro a breve.");
             btn.innerText = "INVIA RICHIESTA";
             e.target.reset();
         });
     };
 
-    startApp();
+    init();
 </script>
 </body>
 </html>
