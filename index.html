@@ -5,39 +5,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Massimiliano Cossu | AI Photo Concierge</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --black: #000; --white: #fff; --light-gray: #f8f8f8; --accent: #666; }
-        body { font-family: 'Montserrat', sans-serif; background: var(--white); color: var(--black); margin: 0; padding: 0; text-align: center; -webkit-font-smoothing: antialiased; }
-        .container { max-width: 450px; margin: 0 auto; padding: 30px 20px; box-sizing: border-box; }
+        :root { --b: #000; --w: #fff; --g: #f8f8f8; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--w); color: var(--b); margin: 0; text-align: center; }
+        .container { max-width: 450px; margin: 0 auto; padding: 20px; }
         
         /* LINGUE */
-        .lang-bar { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; padding: 12px; background: var(--light-gray); border-radius: 50px; }
-        .lang-btn { cursor: pointer; background: none; border: none; font-size: 0.75rem; letter-spacing: 1.5px; color: #999; font-family: inherit; transition: 0.3s; }
-        .lang-btn.active { color: var(--black); font-weight: 600; }
+        .lang-bar { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; padding: 10px; background: var(--g); border-radius: 50px; }
+        .lang-btn { cursor: pointer; background: none; border: none; font-size: 0.7rem; letter-spacing: 1px; color: #999; font-family: inherit; }
+        .lang-btn.active { color: var(--b); font-weight: 600; border-bottom: 1px solid var(--b); }
 
-        /* BRANDING */
-        .logo-container img { width: 140px; height: auto; margin-bottom: 10px; }
-        .brand { font-weight: 400; letter-spacing: 5px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 40px; }
+        /* LOGO */
+        .logo-container img { width: 140px; height: auto; margin-top: 10px; }
+        .brand { font-weight: 400; letter-spacing: 4px; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 30px; }
 
         /* METEO */
-        .weather-card { border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 25px 0; margin-bottom: 40px; }
-        .temp { font-size: 2.8rem; font-weight: 200; }
+        .weather { border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 15px 0; margin-bottom: 30px; }
+        .temp { font-size: 2.5rem; font-weight: 200; }
 
-        /* IL CERVELLO (CHAT BOX) */
-        .chat-box { text-align: left; padding: 25px; background: #fafafa; border-left: 3px solid var(--black); margin-bottom: 40px; }
-        .ai-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 15px; color: var(--accent); }
-        #chat-display { min-height: 80px; font-size: 0.9rem; line-height: 1.7; font-weight: 300; color: #333; margin-bottom: 20px; }
+        /* CHAT AI */
+        .ai-box { text-align: left; padding: 20px; background: #fafafa; border-left: 3px solid var(--b); margin-bottom: 30px; }
+        #display { font-size: 0.85rem; line-height: 1.6; margin-bottom: 15px; min-height: 60px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .m-btn { background: #fff; border: 1px solid #ddd; padding: 10px; font-size: 0.6rem; text-transform: uppercase; cursor: pointer; font-family: inherit; }
+        .m-active { background: var(--b) !important; color: var(--w) !important; }
 
-        /* GRIGLIA A 4 CATEGORIE */
-        .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .mood-btn { background: white; border: 1px solid #eee; padding: 12px; font-size: 0.6rem; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: 0.4s; letter-spacing: 1px; }
-        .mood-active { background: var(--black) !important; color: var(--white) !important; }
-
-        /* INPUT INTELLIGENTE */
-        .input-wrapper { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
-        .input-wrapper input { flex-grow: 1; border: none; background: transparent; font-family: inherit; outline: none; font-size: 0.85rem; }
-        .ask-btn { background: none; border: none; font-weight: 600; font-size: 0.65rem; cursor: pointer; letter-spacing: 1px; }
+        .in-wrap { display: flex; gap: 5px; border-top: 1px solid #eee; padding-top: 10px; }
+        input#user-in { flex-grow: 1; border: none; background: transparent; font-family: inherit; font-size: 0.8rem; outline: none; }
 
         /* FORM */
-        .form-title { font-size: 0.75rem; font-weight: 600; letter-
+        .f-title { font-size: 0.7rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin-top: 30px; }
+        input.f-field { width: 100%; padding: 15px 0; margin-bottom: 10px; border: none; border-bottom: 1px solid #eee; font-family: inherit; outline: none; }
+        .btn-send { background: var(--b); color: var(--w); border: none; width: 100%; padding: 18px; text-transform: uppercase; letter-spacing: 3px; font-size: 0.7rem; cursor: pointer; margin-top: 10px; }
+        
+        footer { margin-top: 40px; font-size: 0.5rem; color: #ccc; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="lang-bar">
+        <button id="it-btn" class="lang-btn active" onclick="setL('it')">ITALIANO</button>
+        <button id="en-btn" class="lang-btn" onclick="setL('en')">ENGLISH</button>
+    </div>
+
+    <div class="logo-container"><img src="logo.jpg" alt="Massimiliano Cossu"></div>
+    <div class="brand">Massimiliano Cossu</div>
+
+    <div class="weather"><div class="temp" id="t">--°C</div></div>
+
+    <div class="ai-box">
+        <div id="display">Analisi meteo... Scegli una categoria o chiedimi un consiglio.</div>
+        <div class="grid">
+            <button class="m-btn" onclick="setM('Romantico', this)" id="m1">🌹 Romantico</button>
+            <button class="m-btn" onclick="setM('Editoriale', this)" id="m2">🧥 Editoriale</button>
+            <button class="m-btn" onclick="setM('Spontaneo', this)" id="m3">📸 Spontaneo</button>
+            <button class="m-btn" onclick="setM('Family', this)" id="m4">👨‍👩‍👧 Family</button>
+        </div>
+        <div class="in-wrap">
+            <input type="text" id="user-in" placeholder="Chiedi...">
+            <button onclick="askAI()" style="border:none; background:none; font-weight:600; cursor:pointer;" id="ask-btn">OK</button>
+        </div>
+    </div>
+
+    <div class="f-title" id="f-t">Prenota Sessione</div>
+    <form id="b-form">
+        <input type="text" id="n" class="f-field" placeholder="NOME" required>
+        <input type="text" id="r" class="f-field" placeholder="CAMERA" required>
+        <input type="hidden" id="h-m" value="None">
+        <button type="submit" class="btn-send" id="s-b">Invia</button>
+    </form>
+
+    <footer>© 2026 Massimiliano Cossu Photography</footer>
+</div>
+
+<script>
+    let curL = 'it';
+    emailjs.init("Jlm5ZEzPEoWKBx3ki");
+
+    const data = {
+        it: {
+            wel: "Meteo analizzato. Scegli una categoria o chiedimi consiglio su abiti e orari.",
+            fT: "Prenota Sessione", bS: "Invia", bA: "OK", ph: "Chiedi...",
+            ms: ["🌹 Romantico", "🧥 Editoriale", "📸 Spontaneo", "👨‍👩‍👧 Family"],
+            re: {
+                Romantico: "🌹 <strong>AI:</strong> Il Parrasio è perfetto. Luci calde e sguardi complici.",
+                Editoriale: "🧥 <strong>AI:</strong> Portici di Oneglia. Look architettonico e sofisticato.",
+                Spontaneo: "📸 <strong>AI:</strong> Porto Maurizio. Catturiamo la vostra naturalezza.",
+                Family: "👨‍👩‍👧 <strong>AI:</strong> Borgo Foce. Spazio e colori ideali per i bambini.",
+                v: "<strong>AI:</strong> Consiglio lino, cotone e colori neutri (beige, bianco).",
+                o: "<strong>AI:</strong> La 'Golden Hour' (un'ora prima del tramonto) è il momento magico.",
+                p: "<strong>AI:</strong> In caso di pioggia, i Portici sono un set riparato magnifico.",
+                def: "<strong>AI:</strong> Ottima domanda! Chiedilo a Massimiliano nel modulo qui sotto."
+            }
+        },
+        en: {
+            wel: "Weather analyzed. Choose a category or ask about outfits and times.",
+            fT: "Book Session", bS: "Send", bA: "OK", ph: "Ask...",
+            ms: ["🌹 Romantic", "🧥 Editorial", "📸 Spontaneous", "👨‍👩‍👧 Family"],
+            re: {
+                Romantico: "🌹 <strong>AI:</strong> Parrasio is perfect. Warm lights and intimate looks.",
+                Editoriale: "🧥 <strong>AI:</strong> Oneglia's Arches. Architectural and sophisticated look.",
+                Spontaneo: "📸 <strong>AI:</strong> Porto Maurizio. Let's capture your natural self.",
+                Family: "👨‍👩‍👧 <strong>AI:</strong> Borgo Foce. Ideal space and colors for children.",
+                v: "<strong>AI:</strong> I recommend linen, cotton and neutral colors (beige, white).",
+                o: "<strong>AI:</strong> 'Golden Hour' (one hour before sunset) is the magic moment.",
+                p: "<strong>AI:</strong> If it rains, the Arches are a magnificent sheltered set.",
+                def: "<strong>AI:</strong> Great question! Ask Massimiliano in the form below."
+            }
+        }
+    };
+
+    function setL(l) {
+        curL = l;
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(l + '-btn').classList.add('active');
+        document.getElementById('display').innerHTML = data[l].wel;
+        document.getElementById('f-t').innerText = data[l].fT;
+        document.getElementById('s-b').innerText = data[l].bS;
+        document.getElementById('user-in').placeholder = data[l].ph;
+        for(let i=1; i<=4; i++) document.getElementById('m'+i).innerText = data[l].ms[i-1];
+    }
+
+    function setM(m, b) {
+        document.querySelectorAll('.m-btn').forEach(btn => btn.classList.remove('m-active'));
+        b.classList.add('m-active');
+        document.getElementById('h-m').value = m;
+        document.getElementById('display').innerHTML = data[curL].re[m];
+    }
+
+    function askAI() {
+        const i = document.getElementById('user-in').value.toLowerCase();
+        const d = document.getElementById('display');
+        let r = data[curL].re.def;
+        if(i.includes("vest") || i.includes("abiti") || i.includes("wear")) r = data[curL].re.v;
+        if(i.includes("ora") || i.includes("quando") || i.includes("time")) r = data[curL].re.o;
+        if(i.includes("piov") || i.includes("rain")) r = data[curL].re.p;
+        d.innerHTML = `<div><strong>You:</strong> ${i}</div><div style="margin-top:8px">${r}</div>`;
+        document.getElementById('user-in').value = "";
+    }
+
+    async function getW() {
+        try {
+            const r = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Imperia&appid=f1cdab2eef339087f342360bdd4958cf&units=metric');
+            const d = await r.json();
+            document.getElementById('t').innerText = Math.round(d.main.temp) + "°C";
+        } catch(e) { document.getElementById('t').innerText = "18°C"; }
+    }
+
+    document.getElementById('b-form').onsubmit = function(e) {
+        e.preventDefault();
+        const b = document.getElementById('s-b');
+        b.innerText = "...";
+        emailjs.send("default_service", "template_ua1pm9l", {
+            from_name: document.getElementById('n').value,
+            room_number: document.getElementById('r').value,
+            mood: document.getElementById('h-m').value
+        }).then(() => {
+            alert(curL === 'it' ? "Inviato!" : "Sent!");
+            b.innerText = data[curL].bS;
+            e.target.reset();
+        });
+    };
+
+    getW();
+    setL('it');
+</script>
+</body>
+</html>
