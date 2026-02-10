@@ -3,38 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Massimiliano Cossu | Photo Concierge</title>
+    <title>Massimiliano Cossu | Imperia Photo Concierge</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root { --gold: #c5a059; --dark: #1a1a1a; --light: #f9f9f9; --white: #ffffff; }
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--light); margin: 0; color: var(--dark); -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--light); margin: 0; color: var(--dark); }
         .container { max-width: 450px; margin: 0 auto; padding: 20px; }
-        
-        header { text-align: center; padding: 40px 0; border-bottom: 1px solid #e0e0e0; margin-bottom: 30px; }
-        header h1 { font-weight: 300; letter-spacing: 4px; text-transform: uppercase; font-size: 1.4rem; margin: 0; color: var(--dark); }
-        .service-title { color: var(--gold); font-size: 0.75rem; letter-spacing: 2px; margin-top: 8px; font-weight: bold; }
-
-        .card { background: var(--white); padding: 25px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid #eee; }
-        
-        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center; margin-bottom: 20px; }
-        .weather-grid small { color: #888; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px; }
-        .weather-grid strong { display: block; font-size: 1.3rem; margin-top: 5px; font-weight: 400; }
-
-        .tip-box { background: #fafafa; padding: 15px; border-left: 3px solid var(--gold); font-size: 0.9rem; font-style: italic; margin-bottom: 15px; color: #555; }
-
+        header { text-align: center; padding: 30px 0; border-bottom: 1px solid #e0e0e0; margin-bottom: 20px; }
+        header h1 { font-weight: 300; letter-spacing: 3px; text-transform: uppercase; font-size: 1.3rem; margin: 0; }
+        .card { background: var(--white); padding: 25px; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
+        .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center; margin-bottom: 15px; }
+        .tip-box { background: #fafafa; padding: 15px; border-left: 3px solid var(--gold); font-size: 0.9rem; margin-bottom: 15px; }
         .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .gallery img { width: 100%; height: 110px; object-fit: cover; border-radius: 2px; transition: transform 0.3s; }
-        .gallery img:hover { transform: scale(1.05); }
-
-        .form-title { font-weight: 300; text-align: center; margin-bottom: 20px; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px; }
-        input { width: 100%; padding: 15px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 2px; box-sizing: border-box; font-size: 16px; font-family: inherit; }
-        input:focus { border-color: var(--gold); outline: none; }
-        
-        .btn { background: var(--dark); color: var(--white); border: none; padding: 18px; width: 100%; cursor: pointer; font-weight: bold; letter-spacing: 2px; transition: 0.3s; text-transform: uppercase; }
+        .gallery img { width: 100%; height: 100px; object-fit: cover; border-radius: 2px; }
+        input, .btn { width: 100%; padding: 15px; margin: 8px 0; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
+        input { border: 1px solid #ddd; font-size: 16px; }
+        .btn { background: var(--dark); color: white; border: none; cursor: pointer; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
         .btn:hover { background: var(--gold); }
-        .btn:disabled { background: #ccc; }
-
-        footer { text-align: center; font-size: 0.7rem; color: #999; margin-top: 40px; padding-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -42,89 +27,65 @@
 <div class="container">
     <header>
         <h1>Massimiliano Cossu</h1>
-        <div class="service-title">PHOTO CONCIERGE SERVICE</div>
+        <div style="color: var(--gold); font-size: 0.7rem; font-weight: bold; letter-spacing: 2px;">IMPERIA PHOTO CONCIERGE</div>
     </header>
 
     <div class="card">
         <div class="weather-grid">
-            <div><small>Meteo Locale</small><strong id="temp">--</strong></div>
-            <div><small>Golden Hour</small><strong id="sun" style="color:var(--gold)">--</strong></div>
+            <div><small style="color:#888">METEO IMPERIA</small><br><strong id="temp">--</strong></div>
+            <div><small style="color:#888">GOLDEN HOUR</small><br><strong id="sun" style="color:var(--gold)">--</strong></div>
         </div>
-        <div class="tip-box" id="style-tip">Analisi delle condizioni di luce in corso...</div>
-        <div class="gallery" id="gallery">
-            </div>
+        <div class="tip-box" id="style-tip">Caricamento consigli...</div>
+        <div class="gallery" id="gallery"></div>
     </div>
 
     <div class="card">
-        <div class="form-title">Richiedi una Sessione</div>
+        <h3 style="font-weight: 300; text-align: center; margin-top: 0;">Richiedi Sessione</h3>
         <form id="bookingForm">
-            <input type="text" id="from_name" placeholder="Nome e Cognome" required title="Inserisci il tuo nome">
-            <input type="text" id="room_number" placeholder="Numero di Camera" required>
+            <input type="text" id="from_name" placeholder="Nome Ospite" required>
+            <input type="text" id="room_number" placeholder="Numero Camera" required>
             <input type="time" id="requested_time" required>
-            <button type="submit" class="btn" id="submitBtn">Invia Richiesta</button>
+            <button type="submit" class="btn" id="submitBtn">Invia al Fotografo</button>
         </form>
     </div>
-
-    <footer>
-        &copy; 2024 Massimiliano Cossu Photography <br>
-        Esclusivamente per partner alberghieri selezionati.
-    </footer>
 </div>
 
 <script>
-    // --- 1. CONFIGURAZIONE ---
     const API_KEY_METEO = "f1cdab2eef339087f342360bdd4958cf";
     const CITY = "Imperia"; 
     const EMAILJS_PUBLIC_KEY = "Jlm5ZEzPEoWKBx3ki";
-    const EMAILJS_SERVICE_ID = "default_service"; // Se non funziona, usa l'ID specifico del tuo servizio
+    const EMAILJS_SERVICE_ID = "default_service"; 
     const EMAILJS_TEMPLATE_ID = "template_ua1pm9l";
 
     emailjs.init(EMAILJS_PUBLIC_KEY);
 
-    // --- 2. GESTIONE METEO E GALLERIA ---
-    async function initApp() {
+    async function init() {
         try {
             const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY_METEO}&units=metric&lang=it`);
             const data = await res.json();
             
-            // Aggiorna temperatura e ora del sole
             document.getElementById('temp').innerText = `${Math.round(data.main.temp)}°C`;
             const sunset = new Date(data.sys.sunset * 1000);
-            // La luce migliore inizia circa 1 ora prima del tramonto
-            const goldenH = `${sunset.getHours() - 1}:${sunset.getMinutes() < 10 ? '0'+sunset.getMinutes() : sunset.getMinutes()}`;
-            document.getElementById('sun').innerText = goldenH;
+            document.getElementById('sun').innerText = `${sunset.getHours()-1}:${sunset.getMinutes()}`;
 
             const tip = document.getElementById('style-tip');
             const gallery = document.getElementById('gallery');
 
-            // Cambia consigli e foto in base al meteo
             if(data.weather[0].main === "Clear" || data.weather[0].main === "Clouds") {
-                tip.innerText = "Luce ideale per ritratti ambientati. Consigliamo abiti dai toni neutri e tessuti naturali per un look editoriale.";
-                // Sostituisci questi link con le tue foto reali caricate online
-                gallery.innerHTML = `
-                    <img src="https://picsum.photos/400/600?random=1">
-                    <img src="https://picsum.photos/400/600?random=2">
-                    <img src="https://picsum.photos/400/600?random=3">`;
+                tip.innerHTML = "<strong>Location: Porto Maurizio.</strong> Abiti leggeri e toni chiari per i caruggi solari.";
+                gallery.innerHTML = '<img src="https://picsum.photos/400/600?random=1"><img src="https://picsum.photos/400/600?random=2"><img src="https://picsum.photos/400/600?random=3">';
             } else {
-                tip.innerText = "Luce morbida e cinematografica. Perfetta per scatti intimi o look più ricercati in interni o zone riparate.";
-                gallery.innerHTML = `
-                    <img src="https://picsum.photos/400/600?random=4">
-                    <img src="https://picsum.photos/400/600?random=5">
-                    <img src="https://picsum.photos/400/600?random=6">`;
+                tip.innerHTML = "<strong>Location: Borgo Parrasio.</strong> Atmosfere intime. Consigliamo toni scuri o trench.";
+                gallery.innerHTML = '<img src="https://picsum.photos/400/600?random=4"><img src="https://picsum.photos/400/600?random=5"><img src="https://picsum.photos/400/600?random=6">';
             }
-        } catch (e) { 
-            console.error("Errore meteo");
-            document.getElementById('style-tip').innerText = "Servizio concierge attivo. Prenota la tua sessione qui sotto.";
-        }
+        } catch (e) { console.error("Errore"); }
     }
 
-    // --- 3. GESTIONE INVIO PRENOTAZIONE ---
     document.getElementById('bookingForm').onsubmit = function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        btn.innerText = "INVIO IN CORSO...";
-        btn.disabled = true;
-
+        btn.innerText = "INVIO...";
+        
         const params = {
             from_name: document.getElementById('from_name').value,
             room_number: document.getElementById('room_number').value,
@@ -133,19 +94,15 @@
 
         emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
             .then(() => {
-                alert("Gentile ospite, la sua richiesta è stata inviata con successo. Massimiliano la contatterà a breve.");
-                btn.innerText = "INVIA RICHIESTA";
-                btn.disabled = false;
+                alert("Richiesta inviata a Massimiliano!");
+                btn.innerText = "INVIA AL FOTOGRAFO";
                 e.target.reset();
             }, (err) => {
-                alert("Ci scusiamo, si è verificato un errore. La preghiamo di riprovare o contattare la reception.");
-                btn.innerText = "INVIA RICHIESTA";
-                btn.disabled = false;
+                alert("Errore. Riprova più tardi.");
+                btn.innerText = "INVIA AL FOTOGRAFO";
             });
     };
-
-    initApp();
+    init();
 </script>
 </body>
 </html>
-
