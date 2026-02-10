@@ -10,112 +10,92 @@
     
     <style>
         :root { --black: #000; --white: #fff; --accent: #666; --light-gray: #fafafa; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--white); color: var(--black); margin: 0; text-align: center; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 450px; margin: 0 auto; padding: 20px 20px 40px 20px; }
         
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: var(--white); 
-            color: var(--black); 
-            margin: 0; 
-            text-align: center; 
-            -webkit-font-smoothing: antialiased; 
-        }
+        /* LANGUAGE SWITCHER */
+        .lang-switch { text-align: right; margin-bottom: 10px; font-size: 0.6rem; letter-spacing: 1px; }
+        .lang-btn { cursor: pointer; opacity: 0.4; transition: 0.3s; padding: 5px; background: none; border: none; font-family: inherit; font-weight: 600; }
+        .lang-btn.active { opacity: 1; text-decoration: underline; }
 
-        .container { max-width: 450px; margin: 0 auto; padding: 40px 20px; }
-        
         /* LOGO & BRANDING */
-        .logo-container img { width: 120px; height: auto; margin-bottom: 5px; }
-        .brand-name { font-weight: 400; letter-spacing: 5px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 40px; }
+        .logo-container img { width: 110px; height: auto; margin-bottom: 5px; }
+        .brand-name { font-weight: 400; letter-spacing: 5px; text-transform: uppercase; font-size: 0.7rem; margin-bottom: 30px; }
 
         /* AI STATUS & WEATHER */
-        .ai-status { font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .ai-status { font-size: 0.5rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 8px; }
         .dot { width: 6px; height: 6px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 5px #00ff00; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-        .weather-card { border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; padding: 25px 0; margin-bottom: 30px; }
-        .city { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: #999; margin-bottom: 5px; display: block; }
-        .temp { font-size: 2.8rem; font-weight: 200; }
+        .weather-card { border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; padding: 20px 0; margin-bottom: 30px; }
+        .city { font-size: 0.55rem; letter-spacing: 3px; text-transform: uppercase; color: #999; margin-bottom: 5px; display: block; }
+        .temp { font-size: 2.2rem; font-weight: 200; }
 
         /* MOOD SELECTOR */
         .mood-container { margin-bottom: 30px; text-align: left; }
-        .ai-label { font-weight: 600; font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        .ai-label { font-weight: 600; font-size: 0.55rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 15px; }
         .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .mood-btn { 
-            background: white; border: 1px solid #eee; padding: 12px; font-size: 0.65rem; 
-            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; font-family: inherit;
-        }
+        .mood-btn { background: white; border: 1px solid #eee; padding: 12px; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; font-family: inherit; }
         .mood-btn:hover { border-color: var(--black); }
         .mood-active { background: var(--black) !important; color: var(--white) !important; border-color: var(--black) !important; }
 
         /* AI CHAT BOX */
-        .chat-box { 
-            text-align: left; font-size: 0.85rem; line-height: 1.7; font-weight: 300; 
-            padding: 20px; background: var(--light-gray); border-left: 2px solid var(--black); margin-bottom: 40px; 
-        }
-        #chat-display { height: 100px; overflow-y: auto; margin-bottom: 15px; }
-
-        /* INTERACTIVE INPUT */
-        .chat-input-wrapper { display: flex; gap: 10px; margin-top: 10px; }
-        .chat-input-wrapper input { 
-            flex-grow: 1; border: none; border-bottom: 1px solid #ddd; 
-            font-size: 0.8rem; font-family: inherit; outline: none; padding: 5px 0;
-        }
+        .chat-box { text-align: left; font-size: 0.8rem; line-height: 1.6; font-weight: 300; padding: 20px; background: var(--light-gray); border-left: 2px solid var(--black); margin-bottom: 30px; }
+        #chat-display { height: 90px; overflow-y: auto; margin-bottom: 10px; }
+        .chat-input-wrapper { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 10px; }
+        .chat-input-wrapper input { flex-grow: 1; border: none; font-size: 0.75rem; font-family: inherit; outline: none; background: none; }
 
         /* FORM */
-        .form-title { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 25px; font-weight: 600; border-top: 1px solid #f0f0f0; padding-top: 30px; }
-        input[type="text"], input[type="time"] { 
-            width: 100%; padding: 15px 0; margin-bottom: 20px; border: none; 
-            border-bottom: 1px solid #eee; font-family: inherit; font-size: 0.85rem; outline: none; 
-        }
-        .btn-main { 
-            background: var(--black); color: var(--white); border: none; width: 100%; 
-            padding: 22px; text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; 
-            cursor: pointer; transition: 0.4s; margin-top: 10px; 
-        }
-        .btn-main:hover { opacity: 0.8; letter-spacing: 5px; }
+        .form-title { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; font-weight: 600; border-top: 1px solid #f0f0f0; padding-top: 30px; }
+        input[type="text"], input[type="time"] { width: 100%; padding: 12px 0; margin-bottom: 15px; border: none; border-bottom: 1px solid #eee; font-family: inherit; font-size: 0.8rem; outline: none; border-radius: 0; }
+        .btn-main { background: var(--black); color: var(--white); border: none; width: 100%; padding: 20px; text-transform: uppercase; letter-spacing: 3px; font-size: 0.65rem; cursor: pointer; transition: 0.4s; }
 
-        footer { margin-top: 50px; font-size: 0.5rem; letter-spacing: 2px; color: #ccc; text-transform: uppercase; }
+        footer { margin-top: 40px; font-size: 0.45rem; letter-spacing: 2px; color: #ccc; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="logo-container">
-        <img src="logo.png" alt="Massimiliano Cossu">
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLanguage('it')">IT</button> | 
+        <button class="lang-btn" onclick="setLanguage('en')">EN</button>
     </div>
+
+    <div class="logo-container"><img src="logo.png" alt="MC"></div>
     <div class="brand-name">Massimiliano Cossu</div>
 
-    <div class="ai-status"><span class="dot"></span> AI Concierge Active</div>
+    <div class="ai-status"><span class="dot"></span> <span id="txt-ai-status">AI Concierge Active</span></div>
+    
     <div class="weather-card">
         <span class="city">Imperia, Riviera dei Fiori</span>
         <div class="temp" id="temp">--°C</div>
     </div>
 
     <div class="mood-container">
-        <span class="ai-label">Definisci il tuo Mood</span>
+        <span class="ai-label" id="txt-mood-label">Definisci il tuo Mood</span>
         <div class="mood-grid">
-            <button class="mood-btn" onclick="setMood('Romantico', this)">🌹 Romantico</button>
-            <button class="mood-btn" onclick="setMood('Editoriale', this)">🧥 Editoriale</button>
-            <button class="mood-btn" onclick="setMood('Spontaneo', this)">📸 Spontaneo</button>
-            <button class="mood-btn" onclick="setMood('Family', this)">👨‍👩‍👧 Family</button>
+            <button class="mood-btn" onclick="setMood('Romantico', this)" id="btn-mood-1">🌹 Romantico</button>
+            <button class="mood-btn" onclick="setMood('Editoriale', this)" id="btn-mood-2">🧥 Editoriale</button>
+            <button class="mood-btn" onclick="setMood('Spontaneo', this)" id="btn-mood-3">📸 Spontaneo</button>
+            <button class="mood-btn" onclick="setMood('Family', this)" id="btn-mood-4">👨‍👩‍👧 Family</button>
         </div>
     </div>
 
     <div class="chat-box">
-        <span class="ai-label">Consulenza AI Live</span>
-        <div id="chat-display">Analisi meteo completata. Seleziona un mood o chiedimi consigli su abiti e orari...</div>
-        
+        <span class="ai-label" id="txt-chat-label">Consulenza AI Live</span>
+        <div id="chat-display">...</div>
         <div class="chat-input-wrapper">
-            <input type="text" id="user-input" placeholder="Chiedi qualcosa...">
-            <button onclick="brainAI()" style="background:none; border:none; cursor:pointer; font-weight:600; font-size:0.6rem; letter-spacing:1px;">INVIO</button>
+            <input type="text" id="user-input" placeholder="Chiedi...">
+            <button onclick="brainAI()" style="background:none; border:none; cursor:pointer; font-weight:600; font-size:0.55rem;">GO</button>
         </div>
     </div>
 
-    <div class="form-title">Richiedi Sessione</div>
+    <div class="form-title" id="txt-form-title">Richiedi Sessione</div>
     <form id="bookingForm">
         <input type="text" id="from_name" placeholder="NOME E COGNOME" required>
         <input type="text" id="room_number" placeholder="NUMERO CAMERA" required>
         <input type="time" id="requested_time" required>
-        <input type="hidden" id="selected_mood" value="Non specificato">
+        <input type="hidden" id="selected_mood" value="None">
         <button type="submit" class="btn-main" id="submitBtn">Invia Richiesta</button>
     </form>
 
@@ -124,68 +104,101 @@
 
 <script>
     const API_KEY = "f1cdab2eef339087f342360bdd4958cf";
+    let currentLang = 'it';
     emailjs.init("Jlm5ZEzPEoWKBx3ki");
 
-    // Inizializzazione Meteo
-    async function initWeather() {
-        try {
-            const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Imperia&appid=${API_KEY}&units=metric&lang=it`);
-            const data = await res.json();
-            document.getElementById('temp').innerText = Math.round(data.main.temp) + "°C";
-        } catch (e) { console.log("Meteo offline"); }
+    const translations = {
+        it: {
+            aiStatus: "AI Concierge Attivo",
+            moodLabel: "Definisci il tuo Mood",
+            chatLabel: "Consulenza AI Live",
+            formTitle: "Richiedi Sessione",
+            placeholderChat: "Chiedi su abiti, orari...",
+            btnSend: "Invia Richiesta",
+            waiting: "INVIO...",
+            moods: ["🌹 Romantico", "🧥 Editoriale", "📸 Spontaneo", "👨‍👩‍👧 Family"],
+            welcome: "Analisi meteo completata. Seleziona un mood o chiedimi consigli...",
+            moodResponses: {
+                Romantico: "🌹 <strong>AI:</strong> Perfetto per il <strong>Parrasio</strong> al tramonto. Colori caldi e sguardi complici.",
+                Editoriale: "🧥 <strong>AI:</strong> Suggerisco i <strong>Portici di Oneglia</strong>. Outfit strutturati e pose decise.",
+                Spontaneo: "📸 <strong>AI:</strong> Passeggiata a <strong>Porto Maurizio</strong>. Abiti comodi e sorrisi veri.",
+                Family: "👨‍👩‍👧 <strong>AI:</strong> <strong>Borgo Foce</strong> è l'ideale. Coordinati nei colori, non nello stile!"
+            }
+        },
+        en: {
+            aiStatus: "AI Concierge Active",
+            moodLabel: "Define your Mood",
+            chatLabel: "Live AI Consultation",
+            formTitle: "Request Session",
+            placeholderChat: "Ask about outfits, times...",
+            btnSend: "Send Request",
+            waiting: "SENDING...",
+            moods: ["🌹 Romantic", "🧥 Editorial", "📸 Spontaneous", "👨‍👩‍👧 Family"],
+            welcome: "Weather analysis complete. Select a mood or ask me for advice...",
+            moodResponses: {
+                Romantico: "🌹 <strong>AI:</strong> Perfect for <strong>Parrasio</strong> at sunset. Warm colors and intimate glances.",
+                Editoriale: "🧥 <strong>AI:</strong> I suggest <strong>Oneglia's Arches</strong>. Structured outfits and bold poses.",
+                Spontaneo: "📸 <strong>AI:</strong> A stroll through <strong>Porto Maurizio</strong>. Casual clothes and real smiles.",
+                Family: "👨‍👩‍👧 <strong>AI:</strong> <strong>Borgo Foce</strong> is ideal. Coordinate colors, not styles!"
+            }
+        }
+    };
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+
+        document.getElementById('txt-ai-status').innerText = translations[lang].aiStatus;
+        document.getElementById('txt-mood-label').innerText = translations[lang].moodLabel;
+        document.getElementById('txt-chat-label').innerText = translations[lang].chatLabel;
+        document.getElementById('txt-form-title').innerText = translations[lang].formTitle;
+        document.getElementById('submitBtn').innerText = translations[lang].btnSend;
+        document.getElementById('user-input').placeholder = translations[lang].placeholderChat;
+        document.getElementById('chat-display').innerHTML = translations[lang].welcome;
+        
+        for(let i=1; i<=4; i++) {
+            document.getElementById('btn-mood-'+i).innerText = translations[lang].moods[i-1];
+        }
     }
 
-    // Gestione Mood
+    async function initWeather() {
+        try {
+            const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Imperia&appid=${API_KEY}&units=metric`);
+            const data = await res.json();
+            document.getElementById('temp').innerText = Math.round(data.main.temp) + "°C";
+        } catch (e) { console.log("Weather error"); }
+    }
+
     function setMood(mood, btn) {
         document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('mood-active'));
         btn.classList.add('mood-active');
         document.getElementById('selected_mood').value = mood;
-
-        const display = document.getElementById('chat-display');
-        const moods = {
-            'Romantico': "<strong>AI:</strong> Scelta perfetta. Per un mood Romantico consiglio il <strong>Parrasio</strong> al tramonto. Colori caldi e sguardi complici.",
-            'Editoriale': "<strong>AI:</strong> Mood sofisticato. Suggerisco i <strong>Portici di Oneglia</strong>. Outfit strutturati e pose da magazine.",
-            'Spontaneo': "<strong>AI:</strong> Cattureremo la verità. Passeggiata a <strong>Porto Maurizio</strong> tra i caruggi. Abiti comodi e sorrisi veri.",
-            'Family': "<strong>AI:</strong> Spazio alla gioia. <strong>Borgo Foce</strong> è l'ideale. Coordinati nei colori, non nello stile!"
-        };
-        display.innerHTML = moods[mood];
+        document.getElementById('chat-display').innerHTML = translations[currentLang].moodResponses[mood];
     }
 
-    // Cervello AI Locale
     function brainAI() {
         const query = document.getElementById('user-input').value.toLowerCase();
         const display = document.getElementById('chat-display');
-        let res = "<strong>AI:</strong> Domanda interessante. Ne parlerò con Massimiliano, ma intanto prenota pure: ti risponderà personalmente!";
+        let res = currentLang === 'it' ? "<strong>AI:</strong> Chiedilo a Massimiliano nel form qui sotto!" : "<strong>AI:</strong> Ask Massimiliano in the form below!";
 
-        if (query.includes("orari") || query.includes("quando")) res = "<strong>AI:</strong> La 'Golden Hour' (un'ora prima del tramonto) è il segreto per foto magiche a Imperia.";
-        if (query.includes("vestiti") || query.includes("abiti")) res = "<strong>AI:</strong> Consiglio lino, cotone e colori neutri. Evita loghi grandi per un look senza tempo.";
-        if (query.includes("piove") || query.includes("pioggia")) res = "<strong>AI:</strong> Se piove, Oneglia offre portici spettacolari e riparati. Oppure riprogrammiamo senza costi!";
-        if (query.includes("prezzo") || query.includes("costa")) res = "<strong>AI:</strong> Le tariffe Concierge sono riservate. Invia il form e riceverai il PDF con i pacchetti esclusivi.";
-        if (query.includes("tempi") || query.includes("consegna")) res = "<strong>AI:</strong> Anteprima entro 24 ore, galleria completa editata entro 7 giorni.";
+        if (query.includes("orari") || query.includes("time") || query.includes("when")) {
+            res = currentLang === 'it' ? "<strong>AI:</strong> La Golden Hour (un'ora prima del tramonto) è il segreto." : "<strong>AI:</strong> Golden Hour (one hour before sunset) is the secret.";
+        }
+        if (query.includes("vestiti") || query.includes("wear") || query.includes("outfit")) {
+            res = currentLang === 'it' ? "<strong>AI:</strong> Consiglio lino e colori neutri. No loghi grandi." : "<strong>AI:</strong> I recommend linen and neutral colors. Avoid big logos.";
+        }
+        if (query.includes("piove") || query.includes("rain")) {
+            res = currentLang === 'it' ? "<strong>AI:</strong> Portici di Oneglia: perfetti e riparati!" : "<strong>AI:</strong> Oneglia's Arches: perfect and sheltered!";
+        }
 
-        display.innerHTML = `<div><strong>Tu:</strong> ${query}</div><div style="margin-top:10px">${res}</div>`;
+        display.innerHTML = `<div><strong>User:</strong> ${query}</div><div style="margin-top:8px">${res}</div>`;
         document.getElementById('user-input').value = "";
     }
 
-    // Invio Email
     document.getElementById('bookingForm').onsubmit = function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        btn.innerText = "INVIO IN CORSO...";
-        
+        btn.innerText = translations[currentLang].waiting;
         emailjs.send("default_service", "template_ua1pm9l", {
-            from_name: document.getElementById('from_name').value,
-            room_number: document.getElementById('room_number').value,
-            requested_time: document.getElementById('requested_time').value,
-            mood: document.getElementById('selected_mood').value
-        }).then(() => {
-            alert("Richiesta ricevuta. Massimiliano ti contatterà a breve.");
-            btn.innerText = "INVIA RICHIESTA";
-            e.target.reset();
-        });
-    };
-
-    initWeather();
-</script>
-</body>
-</html>
+            from_name: document.getElementById('from_name
