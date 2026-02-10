@@ -10,53 +10,39 @@
     
     <style>
         :root { --black: #000; --white: #fff; --accent: #666; --light-gray: #f4f4f4; }
-        body { font-family: 'Montserrat', sans-serif; background: var(--white); color: var(--black); margin: 0; text-align: center; -webkit-font-smoothing: antialiased; }
-        .container { max-width: 450px; margin: 0 auto; padding: 20px 20px 40px 20px; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--white); color: var(--black); margin: 0; padding: 0; text-align: center; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 450px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
         
-        /* BOX LINGUE - MOLTO VISIBILE */
-        .lang-bar { 
-            background: var(--light-gray); 
-            padding: 15px; 
-            margin-bottom: 20px; 
-            display: flex; 
-            justify-content: center; 
-            gap: 30px;
-            border-radius: 8px;
-        }
-        .lang-btn { 
-            cursor: pointer; 
-            background: none; 
-            border: none; 
-            font-family: inherit; 
-            font-size: 0.85rem; 
-            font-weight: 400; 
-            color: #888;
-            transition: 0.3s;
-        }
-        .lang-btn.active { color: var(--black); font-weight: 600; border-bottom: 2px solid var(--black); }
+        /* SELETTORE LINGUA */
+        .lang-bar { background: var(--light-gray); padding: 12px; margin-bottom: 25px; display: flex; justify-content: center; gap: 20px; border-radius: 50px; }
+        .lang-btn { cursor: pointer; background: none; border: none; font-family: inherit; font-size: 0.75rem; letter-spacing: 1px; color: #aaa; transition: 0.3s; padding: 5px 10px; }
+        .lang-btn.active { color: var(--black); font-weight: 600; }
 
-        /* LOGO AREA */
-        .logo-container { margin-bottom: 10px; }
-        .logo-container img { width: 150px; height: auto; display: block; margin: 0 auto; }
-        .brand-name { font-weight: 400; letter-spacing: 5px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 30px; }
+        /* LOGO */
+        .logo-container img { width: 140px; height: auto; display: block; margin: 0 auto 10px; }
+        .brand-name { font-weight: 400; letter-spacing: 5px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 30px; }
 
-        /* AI STATUS & WEATHER */
-        .ai-status { font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        /* STATUS & WEATHER */
+        .ai-status { font-size: 0.55rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; }
         .dot { width: 6px; height: 6px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 5px #00ff00; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .weather-card { border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 15px 0; margin-bottom: 25px; }
+        .temp { font-size: 2.2rem; font-weight: 200; }
 
-        .weather-card { border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 20px 0; margin-bottom: 30px; }
-        .city { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: #999; margin-bottom: 5px; display: block; }
-        .temp { font-size: 2.5rem; font-weight: 200; }
-
-        /* MOOD SELECTOR */
-        .mood-container { margin-bottom: 30px; text-align: left; }
-        .ai-label { font-weight: 600; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        /* MOODS */
+        .mood-container { text-align: left; margin-bottom: 30px; }
+        .label-style { font-weight: 600; font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 12px; }
         .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .mood-btn { background: white; border: 1px solid #ddd; padding: 15px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; font-family: inherit; }
+        .mood-btn { background: white; border: 1px solid #ddd; padding: 12px; font-size: 0.65rem; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: 0.3s; }
         .mood-active { background: var(--black) !important; color: var(--white) !important; border-color: var(--black) !important; }
 
-        /* AI CHAT BOX */
-        .chat-box { text-align: left; font-size: 0.9rem; line-height: 1.7; font-weight: 300; padding: 20px; background: #fafafa; border-left: 3px solid var(--black); margin-bottom: 40px; }
-        #chat-display { min-height: 80px; margin-bottom: 15px; }
-        .chat-input-wrapper { display: flex; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
+        /* CHAT BOX */
+        .chat-box { text-align: left; font-size: 0.85rem; line-height: 1.6; padding: 20px; background: #fafafa; border-left: 3px solid var(--black); margin-bottom: 30px; }
+        #chat-display { min-height: 60px; margin-bottom: 10px; font-weight: 300; }
+        .input-area { display: flex; border-top: 1px solid #eee; padding-top: 10px; }
+        .input-area input { flex-grow: 1; border: none; background: transparent; font-family: inherit; outline: none; font-size: 0.8rem; }
+
+        /* FORM */
+        .form-title { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; font-weight: 600; border-top: 1px solid #eee; padding-top: 25px; }
+        input[type="text"], input[type="time"] { width: 100%; padding: 15px 0; margin-bottom: 15px; border: none; border-bottom: 1px solid #eee; font-family: inherit; font-size: 0.85rem; outline: none; border-radius: 0; }
+        .btn-main { background: var(--black); color: var(--white); border: none; width: 100%; padding: 20px; text-transform: uppercase
